@@ -2,17 +2,17 @@
 
 /***************************************************************************
  *
- *   OUGC Show Forum Rules plugin
+ *   OUGC Show Forum Rules plugin (/inc/plugins/ougc_sfrma.php)
  *	 Author: Omar Gonzalez
  *   Copyright: © 2012 Omar Gonzalez
  *   
- *   Website: http://www.udezain.com.ar
+ *   Website: http://community.mybb.com/user-25096.html
  *
  *   Show forum rules in the thread and edit post pages.
  *
- ***************************************************************************/
+ ***************************************************************************
  
-/****************************************************************************
+****************************************************************************
 	This program is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
@@ -55,6 +55,10 @@ if(!defined('IN_ADMINCP') && defined('THIS_SCRIPT'))
 		{
 			$templatelist .= ',';
 		}
+		else
+		{
+			$templatelist = '';
+		}
 		$templatelist .= 'forumdisplay_rules,forumdisplay_rules_link';
 	}
 }
@@ -65,10 +69,10 @@ function ougc_sfrma_info()
 	return array(
 		'name'			=> 'OUGC Show Forum Rules',
 		'description'	=> 'Show forum rules in the thread and edit post pages.',
-		'website'		=> 'http://udezain.com.ar/',
+		'website'		=> 'http://mods.mybb.com/view/ougc-custom-reputation',
 		'author'		=> 'Omar Gonzalez',
-		'authorsite'	=> 'http://udezain.com.ar/',
-		'version'		=> '1.0',
+		'authorsite'	=> 'http://community.mybb.com/user-25096.html',
+		'version'		=> '1.1',
 		'guid' 			=> '5419c02974929364bd98f6389fe0fb94',
 		'compatibility' => '16*'
 	);
@@ -96,19 +100,12 @@ function ougc_sfrma_deactivate()
 function ougc_sfrma()
 {
 	// If there is no quick reply (showthread.php), then there is no need for forum rules
-	if(THIS_SCRIPT == 'showthread.php')
+	if(THIS_SCRIPT == 'showthread.php' && !$GLOBALS['quickreply'])
 	{
-		global $quickreply;
-
-		if(!trim($quickreply))
-		{
-			return;
-		}
+		return;
 	}
 
-	global $forum;
-
-	$foruminfo = &$forum;
+	$foruminfo = &$GLOBALS['forum'];
 
 	// No rules or rules type, stop
 	$foruminfo['rulestype'] = (int)$foruminfo['rulestype'];
@@ -128,7 +125,7 @@ function ougc_sfrma()
 		case 3:
 			global $parser;
 		
-			if(!(is_object($parser) && $parser instanceof postParser))
+			if(!is_object($parser))
 			{
 				require_once MYBB_ROOT.'inc/class_parser.php';
 				$parser = new postParser;
