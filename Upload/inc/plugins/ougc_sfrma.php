@@ -69,7 +69,7 @@ function ougc_sfrma_info()
 	return array(
 		'name'			=> 'OUGC Show Forum Rules',
 		'description'	=> 'Show forum rules in the thread and edit post pages.',
-		'website'		=> 'http://mods.mybb.com/view/ougc-custom-reputation',
+		'website'		=> 'http://mods.mybb.com/view/ougc-show-forum-rules',
 		'author'		=> 'Omar Gonzalez',
 		'authorsite'	=> 'http://community.mybb.com/user-25096.html',
 		'version'		=> '1.1',
